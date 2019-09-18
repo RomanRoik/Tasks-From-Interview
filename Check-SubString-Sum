@@ -1,0 +1,98 @@
+//Test programm for Vacuumlabs (c#)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TestTaskVacuum
+{
+    class Program
+    {
+        static bool CheckSubArraySum(int[] arr)
+        {
+            int sum = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                for(int j = i; j < arr.Length; j++)
+                {
+                    sum += arr[j];
+                    if (sum == 0 || arr[j] == 0)
+                    {
+                        return true;
+                    }
+                }
+                sum = 0;
+            }
+            return false;
+        }
+        static void Main(string[] args)
+        {
+            Console.Write("Enter number of test cases (0<=T<=50)->");
+            int T = 0;
+            try
+            {
+                T = Convert.ToInt32(Console.ReadLine());
+                if(T<0 || T > 50)
+                {
+                    throw new FormatException();
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error input! T must be a digit with 0<=T<=50 params!\nPress any key to continue...");
+                Console.ReadKey();
+                System.Environment.Exit(0);
+            }
+            int N = 0;
+            int[] arr = new int[0];
+            for(int i = 0; i < T; i++)
+            {
+                Console.Write("Enter length of sequence of numbers (0<=N<=20)->");
+                try
+                { 
+                    N = Convert.ToInt32(Console.ReadLine());
+                    if(N<0 || N > 20)
+                    {
+                        throw new FormatException();
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Error input! N must be a digit with 0<=N<=20 params!");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    continue;
+                }
+                arr = new int[N];
+                Console.WriteLine($"Enter {N} digits devided by SPACE button");
+                string sequence = Console.ReadLine();
+                string[] strArr = sequence.Split(' ').ToArray();
+                if (strArr.Length != N)
+                {
+                    Console.WriteLine("Wrong input sequence!\nPress any key to continue!");
+                    Console.ReadKey();
+                    Console.Clear();
+                    
+                }
+                arr = Array.ConvertAll(strArr, Int32.Parse);
+                Console.WriteLine(CheckSubArraySum(arr));
+                if (T - i != 1)
+                {
+                    Console.WriteLine("Press any key to continue testing...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+                else
+                {
+                    Console.WriteLine("Press any key to exit");
+                }
+                
+
+            }
+            Console.ReadKey();
+        }
+    }
+}
